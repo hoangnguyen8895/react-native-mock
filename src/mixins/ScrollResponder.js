@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import ScrollViewManager from '../NativeModules/ScrollViewManager';
 import Platform from '../plugins/Platform';
 import Dimensions from '../api/Dimensions';
@@ -8,6 +9,7 @@ import warning from 'warning';
 import TextInputState from '../api/TextInputState';
 import Subscribable from './Subscribable';
 import UIManager from '../NativeModules/UIManager';
+import { findNodeHandle } from 'react-native';
 
 /**
  * Mixin that can be integrated in order to handle scrolling that plays well
@@ -103,7 +105,7 @@ const ScrollResponderMixin = {
       // - Determine if releasing should dismiss the keyboard when we are in
       // tap-to-dismiss mode (!this.props.keyboardShouldPersistTaps).
       observedScrollSinceBecomingResponder: false,
-      becameResponderWhileAnimating: false,
+      becameResponderWhileAnimating: false
     };
   },
 
@@ -157,9 +159,11 @@ const ScrollResponderMixin = {
   scrollResponderHandleStartShouldSetResponderCapture(e) {
     // First see if we want to eat taps while the keyboard is up
     const currentlyFocusedTextInput = TextInputState.currentlyFocusedField();
-    if (!this.props.keyboardShouldPersistTaps &&
+    if (
+      !this.props.keyboardShouldPersistTaps &&
       currentlyFocusedTextInput != null &&
-      e.target !== currentlyFocusedTextInput) {
+      e.target !== currentlyFocusedTextInput
+    ) {
       return true;
     }
     return this.scrollResponderIsAnimating();
@@ -222,11 +226,13 @@ const ScrollResponderMixin = {
     // By default scroll views will unfocus a textField
     // if another touch occurs outside of it
     const currentlyFocusedTextInput = TextInputState.currentlyFocusedField();
-    if (!this.props.keyboardShouldPersistTaps &&
+    if (
+      !this.props.keyboardShouldPersistTaps &&
       currentlyFocusedTextInput != null &&
       e.target !== currentlyFocusedTextInput &&
       !this.state.observedScrollSinceBecomingResponder &&
-      !this.state.becameResponderWhileAnimating) {
+      !this.state.becameResponderWhileAnimating
+    ) {
       if (this.props.onScrollResponderKeyboardDismissed) {
         this.props.onScrollResponderKeyboardDismissed(e);
       }
@@ -249,7 +255,8 @@ const ScrollResponderMixin = {
     if (this.props.onResponderGrant) {
       this.props.onResponderGrant(e);
     }
-    this.state.becameResponderWhileAnimating = this.scrollResponderIsAnimating();
+    this.state.becameResponderWhileAnimating =
+      this.scrollResponderIsAnimating();
   },
 
   /**
@@ -336,9 +343,12 @@ const ScrollResponderMixin = {
    */
   scrollResponderIsAnimating() {
     const now = Date.now();
-    const timeSinceLastMomentumScrollEnd = now - this.state.lastMomentumScrollEndTime;
-    const isAnimating = timeSinceLastMomentumScrollEnd < IS_ANIMATING_TOUCH_START_THRESHOLD_MS ||
-      this.state.lastMomentumScrollEndTime < this.state.lastMomentumScrollBeginTime;
+    const timeSinceLastMomentumScrollEnd =
+      now - this.state.lastMomentumScrollEndTime;
+    const isAnimating =
+      timeSinceLastMomentumScrollEnd < IS_ANIMATING_TOUCH_START_THRESHOLD_MS ||
+      this.state.lastMomentumScrollEndTime <
+        this.state.lastMomentumScrollBeginTime;
     return isAnimating;
   },
 
@@ -347,9 +357,7 @@ const ScrollResponderMixin = {
    * This is currently used to help focus on child textviews, but this
    * can also be used to quickly scroll to any element we want to focus
    */
-  scrollResponderScrollTo(offsetX, offsetY, animated = true) {
-
-  },
+  scrollResponderScrollTo(offsetX, offsetY, animated = true) {},
 
   /**
    * A helper function to zoom to a specific rect in the scrollview.
@@ -360,7 +368,7 @@ const ScrollResponderMixin = {
     if (Platform.OS === 'android') {
       invariant('zoomToRect is not implemented');
     } else {
-      ScrollViewManager.zoomToRect(React.findNodeHandle(this), rect, animated);
+      ScrollViewManager.zoomToRect(findNodeHandle(this), rect, animated);
     }
   },
 
@@ -377,12 +385,13 @@ const ScrollResponderMixin = {
   scrollResponderScrollNativeHandleToKeyboard(
     nodeHandle,
     additionalOffset,
-    preventNegativeScrollOffset) {
+    preventNegativeScrollOffset
+  ) {
     this.additionalScrollOffset = additionalOffset || 0;
     this.preventNegativeScrollOffset = !!preventNegativeScrollOffset;
     UIManager.measureLayout(
       nodeHandle,
-      React.findNodeHandle(this.getInnerViewNode()),
+      findNodeHandle(this.getInnerViewNode()),
       this.scrollResponderTextInputFocusError,
       this.scrollResponderInputMeasureAndScrollToKeyboard
     );
@@ -403,7 +412,8 @@ const ScrollResponderMixin = {
     if (this.keyboardWillOpenTo) {
       keyboardScreenY = this.keyboardWillOpenTo.endCoordinates.screenY;
     }
-    let scrollOffsetY = top - keyboardScreenY + height + this.additionalScrollOffset;
+    let scrollOffsetY =
+      top - keyboardScreenY + height + this.additionalScrollOffset;
 
     // By default, this can scroll with negative offset, pulling the content
     // down so that the target component's bottom meets the keyboard's top.
@@ -432,13 +442,25 @@ const ScrollResponderMixin = {
     this.keyboardWillOpenTo = null;
     this.additionalScrollOffset = 0;
     this.addListenerOn(
-      DeviceEventEmitter, 'keyboardWillShow', this.scrollResponderKeyboardWillShow
+      DeviceEventEmitter,
+      'keyboardWillShow',
+      this.scrollResponderKeyboardWillShow
     );
     this.addListenerOn(
-      DeviceEventEmitter, 'keyboardWillHide', this.scrollResponderKeyboardWillHide
+      DeviceEventEmitter,
+      'keyboardWillHide',
+      this.scrollResponderKeyboardWillHide
     );
-    this.addListenerOn(DeviceEventEmitter, 'keyboardDidShow', this.scrollResponderKeyboardDidShow);
-    this.addListenerOn(DeviceEventEmitter, 'keyboardDidHide', this.scrollResponderKeyboardDidHide);
+    this.addListenerOn(
+      DeviceEventEmitter,
+      'keyboardDidShow',
+      this.scrollResponderKeyboardDidShow
+    );
+    this.addListenerOn(
+      DeviceEventEmitter,
+      'keyboardDidHide',
+      this.scrollResponderKeyboardDidHide
+    );
   },
 
   /**
@@ -503,7 +525,7 @@ const ScrollResponderMixin = {
 };
 
 const ScrollResponder = {
-  Mixin: ScrollResponderMixin,
+  Mixin: ScrollResponderMixin
 };
 
 module.exports = ScrollResponder;

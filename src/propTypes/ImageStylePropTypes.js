@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * https://github.com/facebook/react-native/blob/master/Libraries/Image/ImageStylePropTypes.js
  */
@@ -7,8 +8,7 @@ import TransformPropTypes from './TransformPropTypes';
 import ShadowPropTypesIOS from './ShadowPropTypesIOS';
 import LayoutPropTypes from './LayoutPropTypes';
 import ImageResizeMode from './ImageResizeMode';
-
-const { PropTypes } = React;
+import PropTypes from 'prop-types';
 
 const ImageStylePropTypes = {
   ...LayoutPropTypes,
@@ -46,7 +46,7 @@ const ImageStylePropTypes = {
    *
    * @platform android
    */
-  overlayColor: PropTypes.string,
+  overlayColor: PropTypes.string
 };
 
 module.exports = ImageStylePropTypes;

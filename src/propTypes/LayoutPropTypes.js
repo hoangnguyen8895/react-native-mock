@@ -1,9 +1,9 @@
+/* eslint-disable no-unused-vars */
 /**
  * https://github.com/facebook/react-native/blob/master/Libraries/StyleSheet/LayoutPropTypes.js
  */
 import React from 'react';
-
-const { PropTypes } = React;
+import PropTypes from 'prop-types';
 
 /**
  * React Native's layout system is based on Flexbox and is powered both
@@ -44,10 +44,7 @@ const LayoutPropTypes = {
   borderBottomWidth: PropTypes.number,
   borderLeftWidth: PropTypes.number,
 
-  position: PropTypes.oneOf([
-    'absolute',
-    'relative'
-  ]),
+  position: PropTypes.oneOf(['absolute', 'relative']),
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction
   flexDirection: PropTypes.oneOf([
@@ -58,10 +55,7 @@ const LayoutPropTypes = {
   ]),
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap
-  flexWrap: PropTypes.oneOf([
-    'wrap',
-    'nowrap'
-  ]),
+  flexWrap: PropTypes.oneOf(['wrap', 'nowrap']),
 
   // How to align children in the main direction
   // https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
@@ -75,12 +69,7 @@ const LayoutPropTypes = {
 
   // How to align children in the cross direction
   // https://developer.mozilla.org/en-US/docs/Web/CSS/align-items
-  alignItems: PropTypes.oneOf([
-    'flex-start',
-    'flex-end',
-    'center',
-    'stretch'
-  ]),
+  alignItems: PropTypes.oneOf(['flex-start', 'flex-end', 'center', 'stretch']),
 
   // How to align the element in the cross direction
   // https://developer.mozilla.org/en-US/docs/Web/CSS/align-items
@@ -93,7 +82,7 @@ const LayoutPropTypes = {
   ]),
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/flex
-  flex: PropTypes.number,
+  flex: PropTypes.number
 };
 
 module.exports = LayoutPropTypes;

@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import UIManager from '../NativeModules/UIManager';
 import keyMirror from 'keymirror';
-
-const { PropTypes } = React;
+import PropTypes from 'prop-types';
 
 const TypesEnum = {
   spring: true,
@@ -10,14 +10,14 @@ const TypesEnum = {
   easeInEaseOut: true,
   easeIn: true,
   easeOut: true,
-  keyboard: true,
+  keyboard: true
 };
 
 const Types = keyMirror(TypesEnum);
 
 const PropertiesEnum = {
   opacity: true,
-  scaleXY: true,
+  scaleXY: true
 };
 
 const Properties = keyMirror(PropertiesEnum);
@@ -27,30 +27,25 @@ const animChecker = PropTypes.shape({
   delay: PropTypes.number,
   springDamping: PropTypes.number,
   initialVelocity: PropTypes.number,
-  type: PropTypes.oneOf(
-    Object.keys(Types)
-  ),
-  property: PropTypes.oneOf( // Only applies to create/delete
+  type: PropTypes.oneOf(Object.keys(Types)),
+  property: PropTypes.oneOf(
+    // Only applies to create/delete
     Object.keys(Properties)
-  ),
+  )
 });
 
 const configChecker = PropTypes.shape({
   duration: PropTypes.number.isRequired,
   create: animChecker,
   update: animChecker,
-  delete: animChecker,
+  delete: animChecker
 });
 
 const nop = () => {};
 
 function configureNext(config, onAnimationDidEnd) {
   configChecker({ config }, 'config', 'LayoutAnimation.configureNext');
-  UIManager.configureNextLayoutAnimation(
-    config,
-    onAnimationDidEnd || nop,
-    nop
-  );
+  UIManager.configureNextLayoutAnimation(config, onAnimationDidEnd || nop, nop);
 }
 
 function create(duration, type, creationProp) {
@@ -58,32 +53,28 @@ function create(duration, type, creationProp) {
     duration,
     create: {
       type,
-      property: creationProp,
+      property: creationProp
     },
     update: {
-      type,
-    },
+      type
+    }
   };
 }
 
 const Presets = {
-  easeInEaseOut: create(
-    300, Types.easeInEaseOut, Properties.opacity
-  ),
-  linear: create(
-    500, Types.linear, Properties.opacity
-  ),
+  easeInEaseOut: create(300, Types.easeInEaseOut, Properties.opacity),
+  linear: create(500, Types.linear, Properties.opacity),
   spring: {
     duration: 700,
     create: {
       type: Types.linear,
-      property: Properties.opacity,
+      property: Properties.opacity
     },
     update: {
       type: Types.spring,
-      springDamping: 0.4,
-    },
-  },
+      springDamping: 0.4
+    }
+  }
 };
 
 const LayoutAnimation = {
@@ -110,15 +101,9 @@ const LayoutAnimation = {
   Properties,
   configChecker,
   Presets,
-  easeInEaseOut: configureNext.bind(
-    null, Presets.easeInEaseOut
-  ),
-  linear: configureNext.bind(
-    null, Presets.linear
-  ),
-  spring: configureNext.bind(
-    null, Presets.spring
-  ),
+  easeInEaseOut: configureNext.bind(null, Presets.easeInEaseOut),
+  linear: configureNext.bind(null, Presets.linear),
+  spring: configureNext.bind(null, Presets.spring)
 };
 
 module.exports = LayoutAnimation;

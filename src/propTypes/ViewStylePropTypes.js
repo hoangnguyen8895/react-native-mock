@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * https://github.com/facebook/react-native/blob/master/Libraries/Components/View/ViewStylePropTypes.js
  */
@@ -6,8 +7,7 @@ import ColorPropType from './ColorPropType';
 import LayoutPropTypes from './LayoutPropTypes';
 import ShadowPropTypesIOS from './ShadowPropTypesIOS';
 import TransformPropTypes from './TransformPropTypes';
-
-const { PropTypes } = React;
+import PropTypes from 'prop-types';
 
 /**
  * Warning: Some of these properties may not be supported in all releases.
@@ -43,7 +43,7 @@ const ViewStylePropTypes = {
    * Only supported on Android 5.0+, has no effect on earlier versions.
    * @platform android
    */
-  elevation: PropTypes.number,
+  elevation: PropTypes.number
 };
 
 module.exports = ViewStylePropTypes;

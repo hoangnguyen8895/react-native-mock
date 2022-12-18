@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import EdgeInsetsPropType from '../propTypes/EdgeInsetsPropType';
 import PointPropType from '../propTypes/PointPropType';
@@ -6,13 +7,13 @@ import View from './View';
 import ViewStylePropTypes from '../propTypes/ViewStylePropTypes';
 import ScrollViewManager from '../NativeModules/ScrollViewManager';
 import styleSheetPropType from '../propTypes/StyleSheetPropType';
-
-const { PropTypes } = React;
+import PropTypes from 'prop-types';
+import createClass from 'create-react-class';
 
 const SCROLLVIEW = 'ScrollView';
 const INNERVIEW = 'InnerScrollView';
 
-const ScrollView = React.createClass({
+const ScrollView = createClass({
   propTypes: {
     ...View.propTypes,
     /**
@@ -99,7 +100,7 @@ const ScrollView = React.createClass({
      */
     decelerationRate: PropTypes.oneOfType([
       PropTypes.oneOf(['fast', 'normal']),
-      PropTypes.number,
+      PropTypes.number
     ]),
     /**
      * When true, the scroll view's children are arranged horizontally in a row
@@ -116,7 +117,7 @@ const ScrollView = React.createClass({
     indicatorStyle: PropTypes.oneOf([
       'default', // default
       'black',
-      'white',
+      'white'
     ]),
     /**
      * When true, the ScrollView will try to lock to only vertical or horizontal
@@ -141,7 +142,7 @@ const ScrollView = React.createClass({
     keyboardDismissMode: PropTypes.oneOf([
       'none', // default
       'interactive',
-      'on-drag',
+      'on-drag'
     ]),
     /**
      * Determines when the keyboard should stay visible after a tap.
@@ -155,7 +156,13 @@ const ScrollView = React.createClass({
      *   - false, deprecated, use 'never' instead
      *   - true, deprecated, use 'always' instead
      */
-    keyboardShouldPersistTaps: PropTypes.oneOf(['always', 'never', 'handled', false, true]),
+    keyboardShouldPersistTaps: PropTypes.oneOf([
+      'always',
+      'never',
+      'handled',
+      false,
+      true
+    ]),
     /**
      * The maximum allowed zoom scale. The default value is 1.0.
      * @platform ios
@@ -262,7 +269,7 @@ const ScrollView = React.createClass({
     snapToAlignment: PropTypes.oneOf([
       'start', // default
       'center',
-      'end',
+      'end'
     ]),
     /**
      * Experimental: When true, offscreen child views (whose `overflow` value is
@@ -283,7 +290,7 @@ const ScrollView = React.createClass({
      *
      * See [RefreshControl](http://facebook.github.io/react-native/docs/refreshcontrol.html).
      */
-    refreshControl: PropTypes.element,
+    refreshControl: PropTypes.element
   },
 
   mixins: [ScrollResponder.Mixin],
@@ -303,22 +310,18 @@ const ScrollView = React.createClass({
   },
 
   getInnerViewNode() {
-    return React.findNodeHandle(this.refs[INNERVIEW]);
+    return findNodeHandle(this.refs[INNERVIEW]);
   },
 
   endRefreshin() {
-    ScrollViewManager.endRefreshing(
-      React.findNodeHandle(this)
-    );
+    ScrollViewManager.endRefreshing(findNodeHandle(this));
   },
 
-  scrollTo(destY = 0, destX = 0, animated = true) {
-
-  },
+  scrollTo(destY = 0, destX = 0, animated = true) {},
 
   render() {
     return null;
-  },
+  }
 });
 
 module.exports = ScrollView;

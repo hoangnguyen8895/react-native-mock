@@ -1,12 +1,12 @@
+/* eslint-disable no-unused-vars */
 class Animated {}
 
 import React from 'react';
-
-const { PropTypes } = React;
+import PropTypes from 'prop-types';
 
 /* NavigationAction */
 const action = PropTypes.shape({
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
 });
 
 /* NavigationAnimatedValue  */
@@ -14,13 +14,13 @@ const animatedValue = PropTypes.instanceOf(Animated.Value);
 
 /* NavigationRoute  */
 const navigationRoute = PropTypes.shape({
-  key: PropTypes.string.isRequired,
+  key: PropTypes.string.isRequired
 });
 
 /* navigationRoute  */
 const navigationState = PropTypes.shape({
   index: PropTypes.number.isRequired,
-  routes: PropTypes.arrayOf(navigationRoute),
+  routes: PropTypes.arrayOf(navigationRoute)
 });
 
 /* NavigationLayout */
@@ -29,7 +29,7 @@ const layout = PropTypes.shape({
   initHeight: PropTypes.number.isRequired,
   initWidth: PropTypes.number.isRequired,
   isMeasured: PropTypes.bool.isRequired,
-  width: animatedValue,
+  width: animatedValue
 });
 
 /* NavigationScene */
@@ -37,7 +37,7 @@ const scene = PropTypes.shape({
   index: PropTypes.number.isRequired,
   isStale: PropTypes.bool.isRequired,
   key: PropTypes.string.isRequired,
-  route: navigationRoute.isRequired,
+  route: navigationRoute.isRequired
 });
 
 /* NavigationSceneRendererProps */
@@ -47,7 +47,7 @@ const SceneRendererProps = {
   position: animatedValue.isRequired,
   progress: animatedValue.isRequired,
   scene: scene.isRequired,
-  scenes: PropTypes.arrayOf(scene).isRequired,
+  scenes: PropTypes.arrayOf(scene).isRequired
 };
 
 const SceneRenderer = PropTypes.shape(SceneRendererProps);
@@ -65,7 +65,7 @@ const panHandlers = PropTypes.shape({
   onResponderTerminate: PropTypes.func.isRequired,
   onResponderTerminationRequest: PropTypes.func.isRequired,
   onStartShouldSetResponder: PropTypes.func.isRequired,
-  onStartShouldSetResponderCapture: PropTypes.func.isRequired,
+  onStartShouldSetResponderCapture: PropTypes.func.isRequired
 });
 
 /**
@@ -78,7 +78,7 @@ function extractSceneRendererProps(props) {
     position: props.position,
     progress: props.progress,
     scene: props.scene,
-    scenes: props.scenes,
+    scenes: props.scenes
   };
 }
 
@@ -94,5 +94,5 @@ module.exports = {
   action,
   navigationState,
   navigationRoute,
-  panHandlers,
+  panHandlers
 };

@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 import invariant from 'invariant';
 import React from 'react';
 import CameraRollManager from '../NativeModules/CameraRollManager';
-
-const { PropTypes } = React;
+import PropTypes from 'prop-types';
 
 const GROUP_TYPES_OPTIONS = [
   'Album',
@@ -11,13 +11,13 @@ const GROUP_TYPES_OPTIONS = [
   'Faces',
   'Library',
   'PhotoStream',
-  'SavedPhotos', // default
+  'SavedPhotos' // default
 ];
 
 const ASSET_TYPE_OPTIONS = [
   'All',
   'Videos',
-  'Photos', // default
+  'Photos' // default
 ];
 
 /**
@@ -55,11 +55,10 @@ const getPhotosParamChecker = PropTypes.shape({
   /**
    * Filter by mimetype (e.g. image/jpeg).
    */
-  mimeTypes: PropTypes.arrayOf(PropTypes.string),
+  mimeTypes: PropTypes.arrayOf(PropTypes.string)
 });
 
 class CameraRoll {
-
   /**
    * Saves the image to the camera roll / gallery.
    *

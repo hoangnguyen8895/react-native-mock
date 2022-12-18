@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * https://github.com/facebook/react-native/blob/master/Libraries/Components/View/View.js
  */
@@ -5,6 +6,7 @@ import React from 'react';
 import ViewAccessibility from './ViewAccessibility';
 import NativeMethodsMixin from '../mixins/NativeMethodsMixin';
 import ViewPropTypes from '../propTypes/ViewPropTypes';
+import createClass from 'create-react-class';
 
 const { AccessibilityTraits, AccessibilityComponentTypes } = ViewAccessibility;
 
@@ -17,21 +19,21 @@ const statics = {
    * Is 3D Touch / Force Touch available (i.e. will touch events include `force`)
    * @platform ios
    */
-  forceTouchAvailable,
+  forceTouchAvailable
 };
 
-const View = React.createClass({
+const View = createClass({
   propTypes: ViewPropTypes,
 
   mixins: [NativeMethodsMixin],
 
   statics: {
-    ...statics,
+    ...statics
   },
 
   render() {
     return null;
-  },
+  }
 });
 
 module.exports = View;

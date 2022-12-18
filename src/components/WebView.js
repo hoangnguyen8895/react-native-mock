@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import EdgeInsetsPropType from '../propTypes/EdgeInsetsPropType';
 import React from 'react';
 import View from './View';
 import ScrollView from './ScrollView';
 import WebViewManager from '../NativeModules/WebViewManager';
-
-const { PropTypes } = React;
+import PropTypes from 'prop-types';
+import createClass from 'create-react-class';
 
 const RCT_WEBVIEW_REF = 'webview';
 
@@ -14,12 +15,12 @@ const NavigationType = {
   backforward: WebViewManager.NavigationType.BackForward,
   reload: WebViewManager.NavigationType.Reload,
   formresubmit: WebViewManager.NavigationType.FormResubmitted,
-  other: WebViewManager.NavigationType.Other,
+  other: WebViewManager.NavigationType.Other
 };
 
 const JSNavigationScheme = WebViewManager.JSNavigationScheme;
 
-const WebView = React.createClass({
+const WebView = createClass({
   propTypes: {
     ...View.propTypes,
     url: PropTypes.string,
@@ -112,17 +113,17 @@ const WebView = React.createClass({
      * document must also include the webkit-playsinline attribute."
      * @platform ios
      */
-    allowsInlineMediaPlayback: PropTypes.bool,
+    allowsInlineMediaPlayback: PropTypes.bool
   },
 
   statics: {
     JSNavigationScheme,
-    NavigationType,
+    NavigationType
   },
 
   getWebViewHandle() {
-    // TODO(lmr): React.findNodeHandle
-    return React.findNodeHandle(this.refs[RCT_WEBVIEW_REF]);
+    // TODO(lmr): findNodeHandle
+    return findNodeHandle(this.refs[RCT_WEBVIEW_REF]);
   },
 
   reload() {
@@ -139,7 +140,7 @@ const WebView = React.createClass({
 
   render() {
     return null;
-  },
+  }
 });
 
 module.exports = WebView;

@@ -1,13 +1,14 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import TextInputState from '../api/TextInputState';
 import TimerMixin from 'react-timer-mixin';
 import NativeMethodsMixin from '../mixins/NativeMethodsMixin';
 import View from './View';
-import Text from './Text';
+import { TextInputPropTypes } from 'deprecated-react-native-prop-types';
+import PropTypes from 'prop-types';
+import createClass from 'create-react-class';
 
-const { PropTypes } = React;
-
-const TextInput = React.createClass({
+const TextInput = createClass({
   propTypes: {
     ...View.propTypes,
     /**
@@ -22,7 +23,7 @@ const TextInput = React.createClass({
       'none',
       'sentences',
       'words',
-      'characters',
+      'characters'
     ]),
     /**
      * If false, disables auto-correct. The default value is true.
@@ -59,17 +60,13 @@ const TextInput = React.createClass({
       'name-phone-pad',
       'decimal-pad',
       'twitter',
-      'web-search',
+      'web-search'
     ]),
     /**
      * Determines the color of the keyboard.
      * @platform ios
      */
-    keyboardAppearance: PropTypes.oneOf([
-      'default',
-      'light',
-      'dark',
-    ]),
+    keyboardAppearance: PropTypes.oneOf(['default', 'light', 'dark']),
     /**
      * Determines how the return key should look.
      * @platform ios
@@ -85,7 +82,7 @@ const TextInput = React.createClass({
       'send',
       'yahoo',
       'done',
-      'emergency-call',
+      'emergency-call'
     ]),
     /**
      * Limits the maximum number of characters that can be entered. Use this
@@ -194,7 +191,7 @@ const TextInput = React.createClass({
       'never',
       'while-editing',
       'unless-editing',
-      'always',
+      'always'
     ]),
     /**
      * If true, clears the text field automatically when editing begins
@@ -218,7 +215,7 @@ const TextInput = React.createClass({
     /**
      * Styles
      */
-    style: Text.propTypes.style,
+    style: TextInputPropTypes.style,
     /**
      * Used to locate this view in end-to-end tests
      */
@@ -227,23 +224,22 @@ const TextInput = React.createClass({
      * The color of the textInput underline.
      * @platform android
      */
-    underlineColorAndroid: PropTypes.string,
+    underlineColorAndroid: PropTypes.string
   },
   mixins: [NativeMethodsMixin, TimerMixin],
   statics: {
-    State: TextInputState,
+    State: TextInputState
   },
   isFocused() {
-    // TODO(lmr): React.findNodeHandle
-    return TextInputState.currentlyFocusedField() ===
-      React.findNodeHandle(this.refs.input);
+    // TODO(lmr): findNodeHandle
+    return (
+      TextInputState.currentlyFocusedField() === findNodeHandle(this.refs.input)
+    );
   },
-  clear() {
-
-  },
+  clear() {},
   render() {
     return null;
-  },
+  }
 });
 
 module.exports = TextInput;

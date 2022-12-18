@@ -3,12 +3,12 @@ import ScrollResponder from '../mixins/ScrollResponder';
 import TimerMixin from 'react-timer-mixin';
 import ScrollView from './ScrollView';
 import ListViewDataSource from '../api/ListViewDataSource';
+import PropTypes from 'prop-types';
+import createClass from 'create-react-class';
 
-const { PropTypes } = React;
 const SCROLLVIEW_REF = 'listviewscroll';
 
-
-const ListView = React.createClass({
+const ListView = createClass({
   propTypes: {
     ...ScrollView.propTypes,
 
@@ -80,12 +80,12 @@ const ListView = React.createClass({
      * A function that returns the scrollable component in which the list rows
      * are rendered. Defaults to returning a ScrollView with the given props.
      */
-    renderScrollComponent: React.PropTypes.func.isRequired,
+    renderScrollComponent: PropTypes.func.isRequired,
     /**
      * How early to start rendering rows before they come on screen, in
      * pixels.
      */
-    scrollRenderAheadDistance: React.PropTypes.number,
+    scrollRenderAheadDistance: PropTypes.number,
     /**
      * (visibleRows, changedRows) => void
      *
@@ -95,13 +95,13 @@ const ListView = React.createClass({
      * that have changed their visibility, with true indicating visible, and
      * false indicating the view has moved out of view.
      */
-    onChangeVisibleRows: React.PropTypes.func,
+    onChangeVisibleRows: PropTypes.func,
     /**
      * A performance optimization for improving scroll perf of
      * large lists, used in conjunction with overflow: 'hidden' on the row
      * containers.  This is enabled by default.
      */
-    removeClippedSubviews: React.PropTypes.bool,
+    removeClippedSubviews: PropTypes.bool,
     /**
      * An array of child indices determining which children get docked to the
      * top of the screen when scrolling. For example, passing
@@ -110,24 +110,25 @@ const ListView = React.createClass({
      * with `horizontal={true}`.
      * @platform ios
      */
-    stickyHeaderIndices: PropTypes.arrayOf(PropTypes.number),
+    stickyHeaderIndices: PropTypes.arrayOf(PropTypes.number)
   },
   mixins: [ScrollResponder.Mixin, TimerMixin],
 
   statics: {
-    DataSource: ListViewDataSource,
+    DataSource: ListViewDataSource
   },
 
   /**
    * Exports some data, e.g. for perf investigations or analytics.
    */
-  getMetrics() {  // eslint-disable-line react/sort-comp
+  getMetrics() {
+    // eslint-disable-line react/sort-comp
     // It's fixed, but the linter doesnt want to recognise it...
     return {
       contentLength: this.scrollProperties.contentLength,
       totalRows: this.props.dataSource.getRowCount(),
       renderedRows: this.state.curRenderedRowsCount,
-      visibleRows: Object.keys(this._visibleRows).length,
+      visibleRows: Object.keys(this._visibleRows).length
     };
   },
 
@@ -140,9 +141,11 @@ const ListView = React.createClass({
    * such as scrollTo.
    */
   getScrollResponder() {
-    return this.refs[SCROLLVIEW_REF] &&
+    return (
+      this.refs[SCROLLVIEW_REF] &&
       this.refs[SCROLLVIEW_REF].getScrollResponder &&
-      this.refs[SCROLLVIEW_REF].getScrollResponder();
+      this.refs[SCROLLVIEW_REF].getScrollResponder()
+    );
   },
 
   setNativeProps(props) {
@@ -161,7 +164,7 @@ const ListView = React.createClass({
 
   render() {
     return null;
-  },
+  }
 });
 
 module.exports = ListView;
